@@ -1,5 +1,6 @@
 import Spline from '@splinetool/react-spline';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import MiniRobo from './MiniRobo.jsx';
 
 export default function Hero() {
   const { scrollYProgress } = useScroll();
@@ -11,7 +12,7 @@ export default function Hero() {
     <div className="relative h-[92vh] w-full overflow-hidden">
       <motion.div style={{ y, scale, opacity }} className="absolute inset-0">
         <Spline
-          scene="https://prod.spline.design/VJLoxp84lCdVfdZu/scene.splinecode"
+          scene="https://prod.spline.design/vZX5NNlylxke-6DM/scene.splinecode"
           style={{ width: '100%', height: '100%' }}
         />
       </motion.div>
@@ -56,6 +57,9 @@ export default function Hero() {
           </a>
         </motion.div>
       </div>
+
+      {/* mini robo follower */}
+      <MiniRobo />
 
       {/* particles */}
       <ParticleField />
