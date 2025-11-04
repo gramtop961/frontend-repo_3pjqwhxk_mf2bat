@@ -14,8 +14,8 @@ export default function About() {
     <section id="about" className="relative w-full bg-black py-24 text-white">
       <div className="mx-auto max-w-6xl px-6 sm:px-10">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 24, scale: 0.98 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6 }}
           className="text-3xl sm:text-4xl font-bold"
@@ -23,10 +23,10 @@ export default function About() {
           About
         </motion.h2>
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.6, delay: 0.08 }}
           className="mt-6 max-w-3xl text-zinc-300"
         >
           I’m Riteesh — I design systems, build web things, and experiment with playful interfaces. I believe in
@@ -38,12 +38,12 @@ export default function About() {
           {skills.map(({ icon: Icon, label, color }, i) => (
             <motion.div
               key={label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 24, scale: 0.98 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.05 }}
               whileHover={{ y: -6, rotate: 0.2 }}
-              className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-4"
+              className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-4 backdrop-blur"
             >
               <div className={`inline-flex h-12 w-12 items-center justify-center rounded-lg bg-gradient-to-br ${color} text-black shadow-[0_0_30px_rgba(124,58,237,0.25)]`}>
                 <Icon className="h-6 w-6" />

@@ -2,36 +2,12 @@ import React, { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const DATA = [
-  {
-    title: 'Neon UI Kit',
-    category: 'design',
-    description: 'A minimal, glowing component set for dashboards.',
-  },
-  {
-    title: 'Parallax Playground',
-    category: 'dev',
-    description: 'Scroll-bound 3D parallax scenes with WebGL + React.',
-  },
-  {
-    title: 'Idea Garden',
-    category: 'ideas',
-    description: 'A public wall for half-baked experiments and notes.',
-  },
-  {
-    title: 'Futurist Portfolio',
-    category: 'dev',
-    description: 'Dark + neon personal site with micro-interactions.',
-  },
-  {
-    title: 'Poster Lab',
-    category: 'design',
-    description: 'Generative poster explorations with gradients + grids.',
-  },
-  {
-    title: 'Ribbon Physics',
-    category: 'ideas',
-    description: 'Interactive ribbon motion studies and shaders.',
-  },
+  { title: 'Neon UI Kit', category: 'design', description: 'A minimal, glowing component set for dashboards.' },
+  { title: 'Parallax Playground', category: 'dev', description: 'Scroll-bound 3D parallax scenes with WebGL + React.' },
+  { title: 'Idea Garden', category: 'ideas', description: 'A public wall for half-baked experiments and notes.' },
+  { title: 'Futurist Portfolio', category: 'dev', description: 'Dark + neon personal site with micro-interactions.' },
+  { title: 'Poster Lab', category: 'design', description: 'Generative poster explorations with gradients + grids.' },
+  { title: 'Ribbon Physics', category: 'ideas', description: 'Interactive ribbon motion studies and shaders.' },
 ];
 
 const filters = [
@@ -41,18 +17,12 @@ const filters = [
   { key: 'ideas', label: 'Ideas' },
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 },
-};
+const cardVariants = { hidden: { opacity: 0, y: 20, scale: 0.98 }, show: { opacity: 1, y: 0, scale: 1 } };
 
 export default function Projects() {
   const [active, setActive] = useState('all');
 
-  const filtered = useMemo(() => {
-    if (active === 'all') return DATA;
-    return DATA.filter((d) => d.category === active);
-  }, [active]);
+  const filtered = useMemo(() => (active === 'all' ? DATA : DATA.filter((d) => d.category === active)), [active]);
 
   return (
     <section id="projects" className="relative w-full bg-black py-24 text-white">
@@ -64,13 +34,14 @@ export default function Projects() {
               <button
                 key={f.key}
                 onClick={() => setActive(f.key)}
-                className={`rounded-full border px-3 py-1.5 text-sm transition ${
+                className={`group relative overflow-hidden rounded-full border px-3 py-1.5 text-sm transition ${
                   active === f.key
                     ? 'border-fuchsia-400/70 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
                     : 'border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white'
                 }`}
               >
-                {f.label}
+                <span className="relative z-10">{f.label}</span>
+                <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-[120%]" />
               </button>
             ))}
           </div>
@@ -83,20 +54,17 @@ export default function Projects() {
                 key={item.title}
                 layout
                 initial="hidden"
-                animate="show"
+                whileInView="show"
+                viewport={{ once: true, margin: '-50px' }}
                 exit={{ opacity: 0, scale: 0.98 }}
                 variants={cardVariants}
                 transition={{ duration: 0.35, delay: i * 0.03 }}
-                className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/40 p-5"
+                className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-5 backdrop-blur"
               >
-                <div
-                  className="h-36 w-full rounded-lg bg-gradient-to-br from-fuchsia-500/20 via-violet-500/20 to-cyan-500/20"
-                />
+                <div className="h-36 w-full rounded-lg bg-gradient-to-br from-fuchsia-500/15 via-violet-500/15 to-cyan-500/15" />
                 <div className="mt-4 flex items-center justify-between">
                   <h3 className="text-lg font-semibold">{item.title}</h3>
-                  <span className="rounded-full border border-zinc-700 px-2 py-0.5 text-xs text-zinc-300">
-                    {item.category}
-                  </span>
+                  <span className="rounded-full border border-zinc-700 px-2 py-0.5 text-xs text-zinc-300">{item.category}</span>
                 </div>
                 <p className="mt-2 text-sm text-zinc-400">{item.description}</p>
 
@@ -104,11 +72,13 @@ export default function Projects() {
 
                 <div className="absolute inset-0 translate-y-6 opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100">
                   <div className="absolute inset-x-0 bottom-0 flex items-center justify-between p-5">
-                    <button className="rounded-full bg-white/10 px-4 py-2 text-sm backdrop-blur-md transition hover:bg-white/20">
-                      Preview
+                    <button className="group relative overflow-hidden rounded-full bg-white/10 px-4 py-2 text-sm backdrop-blur-md transition hover:bg-white/20">
+                      <span className="relative z-10">Preview</span>
+                      <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-[120%]" />
                     </button>
-                    <button className="rounded-full bg-gradient-to-r from-fuchsia-600 to-cyan-500 px-4 py-2 text-sm text-white shadow-[0_0_20px_rgba(168,85,247,0.35)] transition hover:brightness-110">
-                      Details
+                    <button className="group relative overflow-hidden rounded-full bg-gradient-to-r from-fuchsia-600 to-cyan-500 px-4 py-2 text-sm text-white shadow-[0_0_20px_rgba(168,85,247,0.35)] transition hover:brightness-110">
+                      <span className="relative z-10">Details</span>
+                      <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-[120%]" />
                     </button>
                   </div>
                 </div>
