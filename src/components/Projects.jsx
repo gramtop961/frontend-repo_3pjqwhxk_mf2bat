@@ -1,92 +1,120 @@
-import React, { useMemo, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { Github, Rocket } from 'lucide-react';
 
-const DATA = [
-  { title: 'Neon UI Kit', category: 'design', description: 'A minimal, glowing component set for dashboards.' },
-  { title: 'Parallax Playground', category: 'dev', description: 'Scroll-bound 3D parallax scenes with WebGL + React.' },
-  { title: 'Idea Garden', category: 'ideas', description: 'A public wall for half-baked experiments and notes.' },
-  { title: 'Futurist Portfolio', category: 'dev', description: 'Dark + neon personal site with micro-interactions.' },
-  { title: 'Poster Lab', category: 'design', description: 'Generative poster explorations with gradients + grids.' },
-  { title: 'Ribbon Physics', category: 'ideas', description: 'Interactive ribbon motion studies and shaders.' },
+const projects = [
+  {
+    title: 'neon noodles',
+    stack: ['react', 'three.js', 'framer-motion'],
+    desc: 'a tasty mess of shaders and noodles that wiggle on scroll.',
+    demo: '#',
+    code: '#',
+    color: 'from-fuchsia-500/25 to-indigo-500/25',
+  },
+  {
+    title: 'vibe machine',
+    stack: ['fastapi', 'mongo', 'vite'],
+    desc: 'site that judges your playlist and tries not to be rude.',
+    demo: '#',
+    code: '#',
+    color: 'from-emerald-500/25 to-teal-500/25',
+  },
+  {
+    title: 'buttonverse',
+    stack: ['tailwind', 'radix', 'micro-interactions'],
+    desc: '100 buttons. 101 hover states. chaos wins.',
+    demo: '#',
+    code: '#',
+    color: 'from-amber-500/25 to-rose-500/25',
+  },
 ];
-
-const filters = [
-  { key: 'all', label: 'All' },
-  { key: 'dev', label: 'Dev' },
-  { key: 'design', label: 'Design' },
-  { key: 'ideas', label: 'Ideas' },
-];
-
-const cardVariants = { hidden: { opacity: 0, y: 20, scale: 0.98 }, show: { opacity: 1, y: 0, scale: 1 } };
 
 export default function Projects() {
-  const [active, setActive] = useState('all');
-
-  const filtered = useMemo(() => (active === 'all' ? DATA : DATA.filter((d) => d.category === active)), [active]);
-
   return (
-    <section id="projects" className="relative w-full bg-black py-24 text-white">
-      <div className="mx-auto max-w-6xl px-6 sm:px-10">
-        <div className="flex items-end justify-between gap-6">
-          <h2 className="text-3xl sm:text-4xl font-bold">Projects</h2>
-          <div className="flex flex-wrap gap-2">
-            {filters.map((f) => (
-              <button
-                key={f.key}
-                onClick={() => setActive(f.key)}
-                className={`group relative overflow-hidden rounded-full border px-3 py-1.5 text-sm transition ${
-                  active === f.key
-                    ? 'border-fuchsia-400/70 text-white shadow-[0_0_20px_rgba(168,85,247,0.4)]'
-                    : 'border-zinc-700 text-zinc-300 hover:border-zinc-500 hover:text-white'
-                }`}
-              >
-                <span className="relative z-10">{f.label}</span>
-                <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 group-hover:translate-x-[120%]" />
-              </button>
-            ))}
-          </div>
-        </div>
+    <section className="relative py-24">
+      <div className="max-w-6xl mx-auto px-6">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl md:text-4xl font-bold"
+        >
+          projects (they work. mostly.)
+        </motion.h2>
 
-        <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <AnimatePresence initial={false}>
-            {filtered.map((item, i) => (
-              <motion.article
-                key={item.title}
-                layout
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, margin: '-50px' }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                variants={cardVariants}
-                transition={{ duration: 0.35, delay: i * 0.03 }}
-                className="group relative overflow-hidden rounded-xl border border-zinc-800/80 bg-zinc-900/40 p-5 backdrop-blur"
-              >
-                <div className="h-36 w-full rounded-lg bg-gradient-to-br from-fuchsia-500/15 via-violet-500/15 to-cyan-500/15" />
-                <div className="mt-4 flex items-center justify-between">
-                  <h3 className="text-lg font-semibold">{item.title}</h3>
-                  <span className="rounded-full border border-zinc-700 px-2 py-0.5 text-xs text-zinc-300">{item.category}</span>
-                </div>
-                <p className="mt-2 text-sm text-zinc-400">{item.description}</p>
-
-                <div className="pointer-events-none absolute inset-0 opacity-0 transition group-hover:opacity-100" style={{ background: 'radial-gradient(400px circle at var(--x,50%) var(--y,50%), rgba(34,197,94,0.12), transparent 40%)' }} />
-
-                <div className="absolute inset-0 translate-y-6 opacity-0 transition group-hover:translate-y-0 group-hover:opacity-100">
-                  <div className="absolute inset-x-0 bottom-0 flex items-center justify-between p-5">
-                    <button className="group relative overflow-hidden rounded-full bg-white/10 px-4 py-2 text-sm backdrop-blur-md transition hover:bg-white/20">
-                      <span className="relative z-10">Preview</span>
-                      <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 group-hover:translate-x-[120%]" />
-                    </button>
-                    <button className="group relative overflow-hidden rounded-full bg-gradient-to-r from-fuchsia-600 to-cyan-500 px-4 py-2 text-sm text-white shadow-[0_0_20px_rgba(168,85,247,0.35)] transition hover:brightness-110">
-                      <span className="relative z-10">Details</span>
-                      <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-[120%]" />
-                    </button>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </AnimatePresence>
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {projects.map((p, i) => (
+            <FlipCard key={i} {...p} i={i} />)
+          )}
         </div>
       </div>
     </section>
+  );
+}
+
+function FlipCard({ title, stack, desc, demo, code, color, i }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5, delay: i * 0.06 }}
+      className="[perspective:1200px]"
+    >
+      <div className="group relative h-64 w-full [transform-style:preserve-3d] transition-transform duration-700 hover:[transform:rotateY(180deg)]">
+        {/* front */}
+        <div className="absolute inset-0 rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl shadow-lg overflow-hidden [backface-visibility:hidden]">
+          <div className={`pointer-events-none absolute inset-0 bg-gradient-to-br ${color}`} />
+          <div className="relative z-10 h-full flex flex-col">
+            <div className="text-sm text-white/60">{stack.join(' • ')}</div>
+            <div className="mt-1 text-xl font-semibold">{title}</div>
+            <div className="mt-auto w-full h-24 rounded-xl overflow-hidden">
+              <HoverPreview color={color} />
+            </div>
+          </div>
+        </div>
+        {/* back */}
+        <div className="absolute inset-0 rounded-2xl border border-white/10 bg-black/60 p-4 backdrop-blur-xl shadow-xl rotate-y-180 [backface-visibility:hidden] [transform:rotateY(180deg)]">
+          <div className="h-full flex flex-col">
+            <div className="text-sm text-white/60">{title}</div>
+            <p className="mt-2 text-white/80 text-sm">{desc}</p>
+            <div className="mt-auto flex items-center gap-2">
+              <a href={demo} className="interactive inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs hover:bg-white/15 transition">
+                <Rocket size={14} /> demo
+              </a>
+              <a href={code} className="interactive inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/10 px-3 py-1 text-xs hover:bg-white/15 transition">
+                <Github size={14} /> code
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+function HoverPreview({ color }) {
+  // a tiny animated preview using gradients + parallax wiggle
+  return (
+    <div className="relative h-full w-full overflow-hidden">
+      <div className={`absolute inset-0 bg-gradient-to-br ${color}`} />
+      <motion.div
+        className="absolute inset-4 rounded-lg bg-black/40 border border-white/10"
+        whileHover={{ scale: 1.02 }}
+        transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+      >
+        <div className="absolute -right-6 -top-6 size-20 rounded-full bg-white/10 blur-xl" />
+        <motion.div
+          className="absolute left-4 top-4 size-6 rounded-full bg-white/70"
+          animate={{ x: [0, 30, 0], y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 4, ease: 'easeInOut' }}
+        />
+        <motion.div
+          className="absolute right-6 bottom-6 h-2/3 w-1/3 rounded-lg bg-white/20"
+          animate={{ y: [0, -10, 0] }}
+          transition={{ repeat: Infinity, duration: 5, ease: 'easeInOut' }}
+        />
+      </motion.div>
+    </div>
   );
 }

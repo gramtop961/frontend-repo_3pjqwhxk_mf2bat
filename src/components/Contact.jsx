@@ -1,107 +1,73 @@
-import React from 'react';
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Github, Linkedin, Twitter, Instagram, Mail } from 'lucide-react';
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative w-full bg-black py-24 text-white">
-      <div className="mx-auto max-w-5xl px-6 sm:px-10">
-        <h2 className="text-3xl sm:text-4xl font-bold">Contact</h2>
-        <p className="mt-4 max-w-2xl text-zinc-300">Want to collaborate or just say hi? Drop a message and I’ll get back.</p>
+    <section className="relative py-24">
+      <div className="max-w-6xl mx-auto px-6">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl md:text-4xl font-bold"
+        >
+          say hi.
+        </motion.h2>
 
-        <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
-          <form
+        <div className="mt-10 grid gap-8 md:grid-cols-2">
+          <motion.form
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
             onSubmit={(e) => {
               e.preventDefault();
-              const data = new FormData(e.currentTarget);
-              const name = data.get('name');
-              const email = data.get('email');
-              const message = data.get('message');
-              console.log({ name, email, message });
-              alert('Thanks! Your message has been noted.');
-              e.currentTarget.reset();
+              alert('sent! (jk, but the vibes are immaculate)');
             }}
-            className="rounded-2xl border border-zinc-800/80 bg-zinc-900/40 p-6 backdrop-blur"
           >
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              <label className="flex flex-col">
-                <span className="mb-2 text-sm text-zinc-400">Name</span>
-                <input
-                  name="name"
-                  required
-                  className="rounded-lg border border-zinc-700 bg-transparent px-3 py-2 text-white outline-none transition focus:border-fuchsia-400/70"
-                  placeholder="Your name"
-                />
-              </label>
-              <label className="flex flex-col">
-                <span className="mb-2 text-sm text-zinc-400">Email</span>
-                <input
-                  type="email"
-                  name="email"
-                  required
-                  className="rounded-lg border border-zinc-700 bg-transparent px-3 py-2 text-white outline-none transition focus:border-cyan-400/70"
-                  placeholder="you@domain.com"
-                />
-              </label>
-            </div>
-            <label className="mt-4 flex flex-col">
-              <span className="mb-2 text-sm text-zinc-400">Message</span>
-              <textarea
-                name="message"
-                rows={5}
-                required
-                className="rounded-lg border border-zinc-700 bg-transparent px-3 py-2 text-white outline-none transition focus:border-violet-400/70"
-                placeholder="Tell me about your idea…"
-              />
-            </label>
-            <div className="mt-6">
-              <button
-                type="submit"
-                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-fuchsia-600 to-cyan-500 px-6 py-3 font-medium text-white shadow-[0_0_25px_rgba(168,85,247,0.35)] transition hover:brightness-110"
-              >
-                <span className="relative z-10">Send message</span>
-                <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/30 to-transparent transition-transform duration-700 group-hover:translate-x-[120%]" />
-              </button>
-            </div>
-          </form>
+            <label className="block text-sm text-white/70">your email</label>
+            <input className="interactive mt-1 w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2 outline-none focus:ring-2 focus:ring-fuchsia-500/50" type="email" required placeholder="name@internet.com" />
 
-          <div className="rounded-2xl border border-zinc-800/80 bg-zinc-900/40 p-6 backdrop-blur">
-            <h3 className="text-xl font-semibold">Elsewhere</h3>
-            <p className="mt-2 text-zinc-400">Find me on the networks below:</p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <a
-                href="https://github.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex items-center gap-2 overflow-hidden rounded-full border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition hover:border-white hover:text-white"
-              >
-                <span className="relative z-10 inline-flex items-center gap-2"><Github className="h-4 w-4" /> GitHub</span>
-                <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-[120%]" />
-              </a>
-              <a
-                href="https://www.linkedin.com/"
-                target="_blank"
-                rel="noreferrer"
-                className="group inline-flex items-center gap-2 overflow-hidden rounded-full border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition hover:border-white hover:text-white"
-              >
-                <span className="relative z-10 inline-flex items-center gap-2"><Linkedin className="h-4 w-4" /> LinkedIn</span>
-                <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-[120%]" />
-              </a>
-              <a
-                href="mailto:hello@example.com"
-                className="group inline-flex items-center gap-2 overflow-hidden rounded-full border border-zinc-700 px-4 py-2 text-sm text-zinc-200 transition hover:border-white hover:text-white"
-              >
-                <span className="relative z-10 inline-flex items-center gap-2"><Mail className="h-4 w-4" /> Email</span>
-                <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 group-hover:translate-x-[120%]" />
-              </a>
-            </div>
+            <label className="mt-4 block text-sm text-white/70">message</label>
+            <textarea className="interactive mt-1 w-full rounded-lg border border-white/10 bg-black/40 px-3 py-2 h-32 outline-none focus:ring-2 focus:ring-fuchsia-500/50" placeholder="tell me things" />
 
-            <div className="mt-10 rounded-xl border border-zinc-800 bg-black/50 p-5">
-              <h4 className="font-medium">Currently</h4>
-              <p className="mt-2 text-sm text-zinc-400">Exploring motion systems, shader-based ribbons, and playful web tools.</p>
+            <button className="interactive mt-5 relative overflow-hidden rounded-full border border-white/10 bg-white/10 px-5 py-2 text-sm backdrop-blur-md transition hover:scale-[1.02] hover:bg-white/15">
+              <span className="relative z-10 inline-flex items-center gap-2"><Mail size={16} /> send vibes</span>
+              <span className="pointer-events-none absolute inset-0 translate-x-[-120%] bg-gradient-to-r from-transparent via-white/40 to-transparent transition-transform duration-700 hover:translate-x-[120%]" />
+            </button>
+          </motion.form>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl shadow-lg"
+          >
+            <div className="text-sm text-white/70">find me on the internet</div>
+            <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3">
+              <IconLink href="#" Icon={Github} label="github" />
+              <IconLink href="#" Icon={Twitter} label="x" />
+              <IconLink href="#" Icon={Linkedin} label="linkedin" />
+              <IconLink href="#" Icon={Instagram} label="instagram" />
             </div>
-          </div>
+            <p className="mt-6 text-white/60 text-sm">or email me: <span className="underline">hello@riteesh.dev</span></p>
+          </motion.div>
         </div>
       </div>
     </section>
+  );
+}
+
+function IconLink({ href, Icon, label }) {
+  return (
+    <a
+      href={href}
+      className="interactive flex items-center gap-2 rounded-xl border border-white/10 bg-black/40 px-3 py-2 text-sm hover:bg-black/50 transition"
+    >
+      <Icon size={16} /> {label}
+    </a>
   );
 }
